@@ -16,6 +16,12 @@ Options:
                          Refresh an existing AGENTS.md into the small Harness
                          shim after backing it up. Old Harness-generated files
                          are replaced; custom files receive a marked block.
+      --claude           Also install or refresh CLAUDE.md so Claude Code
+                         auto-loads the harness context. Claude Code never
+                         auto-loads AGENTS.md; the shim @-imports AGENTS.md
+                         and docs/FEATURE_INTAKE.md inside a marked block.
+                         Existing CLAUDE.md files get the block appended
+                         after a backup; a stale block is refreshed in place.
       --override         On protected-path conflict, back up and replace
                          AGENTS.md, docs/, and scripts/.
       --force            Overwrite existing files after backing them up.
@@ -38,6 +44,7 @@ Examples:
   curl -fsSL https://raw.githubusercontent.com/hoangnb24/harness-experimental/main/scripts/install-harness.sh | bash -s -- --yes
   curl -fsSL https://raw.githubusercontent.com/hoangnb24/harness-experimental/main/scripts/install-harness.sh | bash -s -- --merge --yes
   curl -fsSL https://raw.githubusercontent.com/hoangnb24/harness-experimental/main/scripts/install-harness.sh | bash -s -- --merge --refresh-agent-shim --yes
+  curl -fsSL https://raw.githubusercontent.com/hoangnb24/harness-experimental/main/scripts/install-harness.sh | bash -s -- --claude --yes
 EOF
 }
 
@@ -363,6 +370,8 @@ backup_claude_file() {
 }
 
 write_claude_shim() {
+  [ "$INSTALL_CLAUDE_SHIM" -eq 1 ] || return 0
+
   local target="$TARGET_DIR/CLAUDE.md"
   local block_tmp tmp
 
@@ -661,6 +670,7 @@ FORCE=0
 DRY_RUN=0
 INSTALL_RUST_CLI=1
 REFRESH_AGENT_SHIM=0
+INSTALL_CLAUDE_SHIM=0
 REQUESTED_CONFLICT_ACTION=""
 POSITIONAL_TARGET=""
 
@@ -685,6 +695,10 @@ while [ "$#" -gt 0 ]; do
       ;;
     --refresh-agent-shim)
       REFRESH_AGENT_SHIM=1
+      shift
+      ;;
+    --claude)
+      INSTALL_CLAUDE_SHIM=1
       shift
       ;;
     --override)
