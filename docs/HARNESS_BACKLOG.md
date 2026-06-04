@@ -28,6 +28,8 @@ What should be added or changed?
 
 Tiny, normal, or high-risk.
 
+CLI value: `--risk tiny`, `--risk normal`, or `--risk high-risk`.
+
 ### Status
 
 proposed | accepted | implemented | rejected
@@ -77,4 +79,3 @@ implemented — repo-level `CLAUDE.md` shim plus installer support
 fresh installs, appends the marked block to an existing `CLAUDE.md`
 backup-first, refreshes a stale block, skips when current; verified on fresh /
 merge / stale-block / dry-run scenarios).
-

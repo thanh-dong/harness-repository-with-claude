@@ -41,10 +41,10 @@ Examples:
   scripts/install-harness.sh
   scripts/install-harness.sh --directory /path/to/project --yes
   scripts/install-harness.sh ./my-project --force
-  curl -fsSL https://raw.githubusercontent.com/hoangnb24/harness-experimental/main/scripts/install-harness.sh | bash -s -- --yes
-  curl -fsSL https://raw.githubusercontent.com/hoangnb24/harness-experimental/main/scripts/install-harness.sh | bash -s -- --merge --yes
-  curl -fsSL https://raw.githubusercontent.com/hoangnb24/harness-experimental/main/scripts/install-harness.sh | bash -s -- --merge --refresh-agent-shim --yes
-  curl -fsSL https://raw.githubusercontent.com/hoangnb24/harness-experimental/main/scripts/install-harness.sh | bash -s -- --claude --yes
+  curl -fsSL https://raw.githubusercontent.com/hoangnb24/repository-harness/main/scripts/install-harness.sh | bash -s -- --yes
+  curl -fsSL https://raw.githubusercontent.com/hoangnb24/repository-harness/main/scripts/install-harness.sh | bash -s -- --merge --yes
+  curl -fsSL https://raw.githubusercontent.com/hoangnb24/repository-harness/main/scripts/install-harness.sh | bash -s -- --merge --refresh-agent-shim --yes
+  curl -fsSL https://raw.githubusercontent.com/hoangnb24/repository-harness/main/scripts/install-harness.sh | bash -s -- --claude --yes
 EOF
 }
 
@@ -151,15 +151,17 @@ copy_file() {
 merge_gitignore() {
   local target="$1"
   local marker="# Harness durable layer"
-  local rules="harness.db
+local rules="harness.db
 harness.db-wal
 harness.db-shm
-scripts/bin/harness-cli"
+scripts/bin/harness-cli
+scripts/bin/harness-cli.exe"
 
-  if grep -Fxq "harness.db" "$target" &&
-     grep -Fxq "harness.db-wal" "$target" &&
-     grep -Fxq "harness.db-shm" "$target" &&
-     grep -Fxq "scripts/bin/harness-cli" "$target"; then
+if grep -Fxq "harness.db" "$target" &&
+   grep -Fxq "harness.db-wal" "$target" &&
+   grep -Fxq "harness.db-shm" "$target" &&
+   grep -Fxq "scripts/bin/harness-cli" "$target" &&
+   grep -Fxq "scripts/bin/harness-cli.exe" "$target"; then
     log "skip     .gitignore (harness rules already present)"
     SKIPPED=$((SKIPPED + 1))
     return
@@ -514,9 +516,9 @@ default_cli_base_url() {
   fi
 
   if [ -n "$release_tag" ] && [ "$release_tag" != "latest" ]; then
-    printf 'https://github.com/hoangnb24/harness-experimental/releases/download/%s\n' "$release_tag"
+    printf 'https://github.com/hoangnb24/repository-harness/releases/download/%s\n' "$release_tag"
   else
-    printf 'https://github.com/hoangnb24/harness-experimental/releases/latest/download\n'
+    printf 'https://github.com/hoangnb24/repository-harness/releases/latest/download\n'
   fi
 }
 
@@ -748,7 +750,7 @@ SCRIPT_PATH="${BASH_SOURCE[0]:-$0}"
 SCRIPT_DIR="$(cd "$(dirname "$SCRIPT_PATH")" 2>/dev/null && pwd -P || printf '')"
 SOURCE_ROOT=""
 SOURCE_MODE="remote"
-SOURCE_BASE_URL="${HARNESS_SOURCE_BASE_URL:-https://raw.githubusercontent.com/hoangnb24/harness-experimental/main}"
+SOURCE_BASE_URL="${HARNESS_SOURCE_BASE_URL:-https://raw.githubusercontent.com/hoangnb24/repository-harness/main}"
 SOURCE_BASE_URL="${SOURCE_BASE_URL%/}"
 CLI_BASE_URL="${HARNESS_CLI_BASE_URL:-}"
 CLI_BASE_URL="${CLI_BASE_URL%/}"
@@ -832,6 +834,7 @@ docs/decisions/0002-post-spec-product-lifecycle.md
 docs/decisions/0003-generic-spec-intake-harness.md
 docs/decisions/0004-sqlite-durable-layer.md
 docs/decisions/0005-prebuilt-rust-harness-cli.md
+docs/decisions/0006-phase-4-benchmark-triage.md
 docs/decisions/README.md
 docs/product/README.md
 docs/stories/README.md
@@ -846,6 +849,7 @@ docs/templates/high-risk-story/overview.md
 docs/templates/high-risk-story/validation.md
 scripts/README.md
 scripts/schema/001-init.sql
+scripts/schema/002-story-verify.sql
 .gitignore
 EOF
 
