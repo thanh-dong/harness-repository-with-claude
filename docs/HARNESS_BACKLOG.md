@@ -71,5 +71,9 @@ Normal (installer change, additive, affects downstream installs).
 
 ### Status
 
-proposed — repo-level `CLAUDE.md` shim already implemented here.
+implemented — repo-level `CLAUDE.md` shim plus installer support
+(`write_claude_shim` in `scripts/install-harness.sh`: creates `CLAUDE.md` on
+fresh installs, appends the marked block to an existing `CLAUDE.md`
+backup-first, refreshes a stale block, skips when current; verified on fresh /
+merge / stale-block / dry-run scenarios).
 
