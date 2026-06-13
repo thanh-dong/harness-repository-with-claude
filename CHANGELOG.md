@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-06-13 - PR #3
+
+- docs(harness): impact-analysis plugin on the inbound tool registry (US-026) (@thanh-dong)
+- Merge commit: `fe27cbe697cb17bd7fc9806956ffac3a8e458350`
+- Harness CLI release: not required
+- Changed files:
+  - `docs/FEATURE_INTAKE.md`
+  - `docs/IMPACT_ANALYSIS.md`
+  - `docs/stories/epics/E04-impact-analysis/US-026-blast-radius-plugin.md`
+  - `docs/templates/story.md`
+
 ## 2026-06-13 - PR #2
 
 - feat(cli): kind-aware inbound tool registry with presence scanning (@thanh-dong)
