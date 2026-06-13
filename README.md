@@ -21,6 +21,12 @@
 
 </div>
 
+> [!NOTE]
+> This repository (`thanh-dong/harness-repository-cc`) is a **customized fork**,
+> tuned for my own Claude Code projects. The original work is by
+> [Hoang Nguyen (@hoangnb24)](https://github.com/hoangnb24/repository-harness) —
+> see [Acknowledgements](#-acknowledgements).
+
 ---
 
 ## 💡 What It Is
@@ -38,12 +44,6 @@ future agents should inherit.
 
 It ships **no application of its own**. It is the operating layer you add around
 whatever you are building.
-
-> [!NOTE]
-> This repository (`thanh-dong/harness-repository-cc`) is a **customized fork**,
-> tuned for my own Claude Code projects. The original work is by
-> [Hoang Nguyen (@hoangnb24)](https://github.com/hoangnb24/repository-harness) —
-> see [Acknowledgements](#-acknowledgements).
 
 This project is exploring a simple idea:
 
