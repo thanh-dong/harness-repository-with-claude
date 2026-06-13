@@ -21,6 +21,10 @@ Restate as work item
 Find affected product docs and stories
     |
     v
+Run impact analysis when the
+impact-analysis capability is active
+    |
+    v
 Run risk checklist
     |
     v
@@ -94,6 +98,22 @@ Requirements:
   `docs/decisions/NNNN-*.md` file from `docs/templates/decision.md`, then add
   or refresh the durable row with `scripts/bin/harness-cli decision add`.
   Decision text in a trace is not a durable decision record.
+
+## Impact Analysis
+
+On normal and high-risk work, when the `impact-analysis` capability has a
+registered provider, run the impact analysis described in
+`docs/IMPACT_ANALYSIS.md` before completing the risk checklist. Check activation
+with `scripts/bin/harness-cli query tools --capability impact-analysis`, and run
+`scripts/bin/harness-cli tool check` at intake start so provider presence is a
+scanned fact rather than a trusted declaration. Its output feeds the
+`Existing behavior`, `Multi-domain`, and `Public contracts` flags, the
+validation re-run set, and the implementation reading list. Tiny-lane work skips
+it. When no provider is registered, the capability is inactive: skip the step
+and note the skip in the trace. A registered provider that scans as missing,
+stale, or drifted is not a skip: degrade per the Degraded Modes table in
+`docs/IMPACT_ANALYSIS.md` and set the `Weak proof` flag. If the analysis
+escalates the lane, re-classify before proceeding.
 
 ## Risk Checklist
 
